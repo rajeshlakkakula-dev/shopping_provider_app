@@ -9,11 +9,15 @@ class MyCatalog extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           _MyAppBar(),
-          SliverToBoxAdapter(child: SizedBox(height: 12,),),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 12,
+            ),
+          ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
-                (context, index) => _MyListItem(index)
-            ),)
+                (context, index) => _MyListItem(index)),
+          )
         ],
       ),
     );
@@ -21,44 +25,27 @@ class MyCatalog extends StatelessWidget {
 }
 
 class _MyListItem extends StatelessWidget {
+  late final int index;
 
-   late final int index;
+  _MyListItem(this.index);
 
-
-   _MyListItem(this.index);
-
-   @override
+  @override
   Widget build(BuildContext context) {
-
-
     return Padding(
-
-        padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: LimitedBox(
         maxHeight: 45,
         child: Row(
           children: [
-
-            AspectRatio(aspectRatio: 1,
-
-              child: Container(
-
-              ),
+            AspectRatio(
+              aspectRatio: 1,
+              child: Container(),
             )
-
           ],
         ),
-
-
-
       ),
-
-
-
     );
-
   }
-
 }
 
 class _MyAppBar extends StatelessWidget {

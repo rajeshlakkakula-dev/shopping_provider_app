@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:shopping_provider_app/models/cartModel.dart';
+import 'package:shopping_provider_app/models/catalogModel.dart';
 import 'package:shopping_provider_app/screens/cart.dart';
 import 'package:shopping_provider_app/screens/catalog.dart';
 import 'package:shopping_provider_app/screens/login.dart';
@@ -23,7 +25,6 @@ GoRouter router() {
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     /**
@@ -31,7 +32,18 @@ class MyApp extends StatelessWidget {
      * have a convience of proving multiple objects
      * */
     return MultiProvider(
-      providers: [],
+      providers: [
+        Provider(
+          create: (context) => CatalogModel(),
+        ),
+        ChangeNotifierProxyProvider<CatalogModel, CartModel>(
+            create: (context) => CartModel(),
+            update: (context, catalog, cart) {
+              if (cart == null) throw ArgumentError.notNull('cart');
+              cart.catalog = catalog;
+              return cart;
+            })
+      ],
       child: MaterialApp.router(
         title: 'Shopping App',
         theme: appTheme,

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MyLogin extends StatelessWidget {
@@ -11,19 +10,19 @@ class MyLogin extends StatelessWidget {
             children: [
               Text('Welcome', style: Theme.of(context).textTheme.displayLarge),
               TextFormField(
-                decoration: InputDecoration(hintText: 'UserName'),
+                decoration: const InputDecoration(hintText: 'UserName'),
               ),
               TextFormField(
-                decoration: InputDecoration(hintText: 'Password'),
+                decoration: const InputDecoration(hintText: 'Password'),
                 obscureText: true,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 24,
               ),
               ElevatedButton(
                   onPressed: () {},
-                  child: Text('ENTER'),
-                  style: Theme.of(context).elevatedButtonTheme.style)
+                  style: Theme.of(context).elevatedButtonTheme.style,
+                  child: const Text('ENTER'))
             ],
           ),
         ),

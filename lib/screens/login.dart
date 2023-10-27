@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MyLogin extends StatelessWidget {
   @override
@@ -6,7 +7,9 @@ class MyLogin extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Container(
+          padding: const EdgeInsets.all(80),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text('Welcome', style: Theme.of(context).textTheme.displayLarge),
               TextFormField(
@@ -20,7 +23,9 @@ class MyLogin extends StatelessWidget {
                 height: 24,
               ),
               ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.pushReplacement('/catalog');
+                  },
                   style: Theme.of(context).elevatedButtonTheme.style,
                   child: const Text('ENTER'))
             ],

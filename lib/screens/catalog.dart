@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:shopping_provider_app/models/cartModel.dart';
+import 'package:shopping_provider_app/models/catalogModel.dart';
 
 class MyCatalog extends StatelessWidget {
   const MyCatalog({super.key});
@@ -32,6 +35,10 @@ class _MyListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var item = context
+        .select<CatalogModel, Item>((catalog) => catalog.getByPosition(index));
+    var textTheme = Theme.of(context).textTheme.titleLarge;
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: LimitedBox(
@@ -40,12 +47,52 @@ class _MyListItem extends StatelessWidget {
           children: [
             AspectRatio(
               aspectRatio: 1,
-              child: Container(),
-            )
+              child: Container(
+                color: item.color,
+              ),
+            ),
+            SizedBox(
+              width: 20,
+            ),
+            Expanded(
+                child: Text(
+              item.name,
+              style: textTheme,
+            )),
+            SizedBox(
+              width: 20,
+            ),
+            _AddButton(item: item),
           ],
         ),
       ),
     );
+  }
+}
+
+class _AddButton extends StatelessWidget {
+  final Item item;
+
+  _AddButton({required this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    var isInCart =
+        context.select<CartModel, bool>((cart) => cart.items.contains(item));
+
+    return TextButton(
+        onPressed: isInCart
+            ? null
+            : () {
+                var cart = context.read<CartModel>();
+                cart.add(item);
+              },
+        child: isInCart
+            ? Icon(
+                Icons.check,
+                semanticLabel: 'ADDED',
+              )
+            : Text('ADD'));
   }
 }
 
@@ -60,7 +107,7 @@ class _MyAppBar extends StatelessWidget {
       floating: true,
       actions: [
         IconButton(
-            onPressed: () => context.go('/catalog/cart'),
+            onPressed: () => context.go('/cart'),
             icon: Icon(Icons.shopping_cart))
       ],
     );

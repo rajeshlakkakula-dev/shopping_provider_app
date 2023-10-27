@@ -11,7 +11,7 @@ class CartModel extends ChangeNotifier {
   /// The current catalog used to construct items from ids.
   CatalogModel get catalog => _catalog;
 
-  int get totalPrice => items.fold(0, (total, count) => total + current.price);
+  int get totalPrice => items.fold(0, (total, count) => total + count.price);
 
   set catalog(CatalogModel newCatalog) {
     _catalog = newCatalog;
